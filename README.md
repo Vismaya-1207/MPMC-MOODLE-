@@ -32,19 +32,28 @@ END
 ```
 ### (ii)USING C LANGUAGE
 ```
-ORG 00H
-MOV DPTR,#4500H
-MOV TMOD,#20H
-MOV TH1,#0FDH
-MOV SCON,#40H
-SETB TR1
-AGAIN:MOVX A,@DPTR
-MOV SBUF,A
-WAIT:JNB TI,WAIT
-CLR TI
-INC DPTR
-SJMP AGAIN
-END
+#include <reg51.h>  
+void delay(void);  
+void main(void)
+{
+    TMOD = 0x01;  
+    while(1)
+    {
+        P1 = 0xFF;  
+        delay();   
+        P1 = 0x00;  
+        delay();
+    }
+}
+void delay(void)
+{
+    TH0 = 0xFF;    
+    TL0 = 0xF6;     
+    TR0 = 1;       
+    while (TF0 == 0);  
+    TR0 = 0;        
+    TF0 = 0;        
+}
 
 ```
 
