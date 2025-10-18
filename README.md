@@ -1,22 +1,22 @@
-SQUARE WAVE GENERATOR USING ASSEMBLY CODE AND C PROGRAM:
 
-AIM:
-To write and execute an square wave geneartor with frequency of 50khz using assembly code.
+# SQUARE WAVE GENERATOR WITH FREQUENCY 50KHZ
 
-APPARATUS REQUIRED:
+## AIM
+To write and execute an square wave with frequency 50khz in assembly and c program.
 
-Personal Computer
+## APPARATUS REQUIRED
+- Personal Computer  
+- Keil µVision Software  
 
-Keil µVision Software
+## PROGRAM
 
-PROGRAM:
+### (i) USING ASSEMBLY LANGUAGE
 
-i)Using Assembly code:
-
+```
 ORG 0000H         
 MOV TMOD, #01H    
-AGAIN:  MOV P1, #0FFH  
-CALL DELAY      
+AGAIN: MOV P1, #0FFH  
+CALL DELAY
 MOV P1, #00H    
 CALL DELAY      
 SJMP AGAIN      
@@ -29,37 +29,32 @@ CLR TF0
 RET           
 END
 
-ii)Using C Program:
+```
+### (ii)USING C LANGUAGE
+```
+ORG 00H
+MOV DPTR,#4500H
+MOV TMOD,#20H
+MOV TH1,#0FDH
+MOV SCON,#40H
+SETB TR1
+AGAIN:MOVX A,@DPTR
+MOV SBUF,A
+WAIT:JNB TI,WAIT
+CLR TI
+INC DPTR
+SJMP AGAIN
+END
 
-#include <reg51.h>  
-void delay(void);  
-void main(void)
-{
-    TMOD = 0x01;  
-    while(1)
-    {
-        P1 = 0xFF;  
-        delay();   
-        P1 = 0x00;  
-        delay();
-    }
-}
-void delay(void)
-{
-    TH0 = 0xFF;    
-    TL0 = 0xF6;     
-    TR0 = 1;       
-    while (TF0 == 0);  
-    TR0 = 0;        
-    TF0 = 0;        
-}
+```
 
-OUTPUT:
+### OUTPUT:
 
-<img width="1672" height="730" alt="Screenshot 2025-10-18 153539" src="https://github.com/user-attachments/assets/b8b34ab8-1077-4c32-8935-66de47800476" />
+<img width="1672" height="730" alt="Screenshot 2025-10-18 153539" src="https://github.com/user-attachments/assets/6ed6ae94-d394-47dd-a4be-a21d326a9bac" />
 
+<img width="1668" height="720" alt="Screenshot 2025-10-18 151534" src="https://github.com/user-attachments/assets/010cc10c-13f2-4ebf-b96c-61a71724e33f" />
 
-<img width="1668" height="720" alt="Screenshot 2025-10-18 151534" src="https://github.com/user-attachments/assets/42881ade-5cc7-4ab1-b937-e924a436cb7e" />
+### RESULT:
 
-RESULT:
-Thus the Square Wave Generator using keil software was done and shown the output.
+Thus the square wave is generated using both assembly and C program  an the output is shown.
+
